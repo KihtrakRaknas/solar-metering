@@ -15,7 +15,7 @@ export default function Table(props) {
             //scrollX
             
             data={{
-                columns:key.map(name=>({label: name, field:name})),
+                columns:key,
                 rows:tableData
             }}
         />

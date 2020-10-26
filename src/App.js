@@ -3,6 +3,8 @@ import raw from "raw.macro";
 import parse from 'csv-parse';
 import Table from './components/Table';
 import NoData from './components/NoData';
+import Graph from './components/Graph';
+
 
 function App() {
   const [data, setData] = useState([]);
@@ -27,11 +29,10 @@ function App() {
 
   return (
     <div className="App">
-      
+      {data.length>0?<Graph data={data}/>:<NoData/>}
       <div style={{padding:15, overflowX:"auto"}}>
         {data.length>0?<Table data={data}/>:<NoData/>}
       </div>
-      <p>test</p>
     </div>
   );
 }

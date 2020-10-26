@@ -6,5 +6,5 @@ export default function prepDataForTable(arr) {
     //     return rowObj
     // })
     // return {key, tableData}
-    return {tableData: arr, key: Object.keys(arr[0])}
+    return {tableData: arr, key: Object.keys(arr[0]).map(name=>({label: name.split("_").join(" "), field:name}))}
 }
