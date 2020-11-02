@@ -29,6 +29,12 @@ function App() {
 
   return (
     <div className="App">
+      <div className="title_component">
+        <header className="App-header">
+          <h1 className="App-title">Real-Time Solar Output</h1>
+        </header>
+      </div>
+
       {data.length>0?<Graph data={data}/>:<NoData/>}
       <div style={{padding:15, overflowX:"auto"}}>
         {data.length>0?<Table data={data}/>:<NoData/>}
