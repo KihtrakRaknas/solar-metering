@@ -31,7 +31,6 @@ function App() {
     <div className="App">
       <div className="title_component">
         <header className="App-header">
-          <h1 className="App-title">Real-Time Solar Output</h1>
         </header>
       </div>
 
