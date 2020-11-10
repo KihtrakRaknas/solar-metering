@@ -22,7 +22,24 @@ function App() {
         console.error(err)
       else
         setData(output)
-    }) 
+    })
+    
+    // Trying to display data Sammi outlined was most important. I want to get the two graphs to coexist somehow, with one graph being
+    // a bit more prominent than the other.  
+
+    /*const logFile2 = raw("../please1.csv")
+
+    parse(logFile2, {
+      comment: '#',
+      delimiter: ',',
+      columns: true
+    }, function(err, output){
+      // console.log(output)
+      if(err)
+        console.error(err)
+      else
+        setData(output)
+    }) */
   }
 
   useEffect(update,[true])
