@@ -3,7 +3,7 @@ import { MDBDataTable } from 'mdbreact';
 import prepDataForTable from '../helperFunctions/prepDataForTable';
 
 export default function Table(props) {
-    const {key, tableData} = prepDataForTable(props.data)
+    const {key, tableData} = prepDataForTable(props.data, props.fields)
     // console.log(tableData)
     // console.log(props.data)
     return (

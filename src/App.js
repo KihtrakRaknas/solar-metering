@@ -16,14 +16,14 @@ function App() {
       comment: '#',
       delimiter: ',',
       columns: true
-    }, function(err, output){
+    }, function (err, output) {
       // console.log(output)
-      if(err)
+      if (err)
         console.error(err)
       else
         setData(output)
     })
-    
+
     // Trying to display data Sammi outlined was most important. I want to get the two graphs to coexist somehow, with one graph being
     // a bit more prominent than the other.  
 
@@ -42,7 +42,7 @@ function App() {
     }) */
   }
 
-  useEffect(update,[true])
+  useEffect(update, [true])
 
   return (
     <div className="App">
@@ -52,9 +52,9 @@ function App() {
         </header>
       </div>
 
-      {data.length>0?<Graph data={data}/>:<NoData/>}
-      <div style={{padding:15, overflowX:"auto"}}>
-        {data.length>0?<Table data={data}/>:<NoData/>}
+      {data.length > 0 ? <Graph data={data} /> : <NoData />}
+      <div style={{ padding: 15, overflowX: "auto" }}>
+        {data.length > 0 ? <><Table data={data} fields={["time (UTC)", "Vb_max_daily", "Vb_min_daily", "Whc_daily", "alarm_daily"]} /><Table data={data}/></> : <NoData />}
       </div>
     </div>
   );
