@@ -8,7 +8,7 @@ export default function prepDataForTable(arr, fields) {
     // return {key, tableData}
     for(let timeKey of Object.keys(arr[0]).filter(el=>el.includes("time"))){
         arr.forEach(row=>{
-            row[timeKey]=new Date(row[timeKey]).toLocaleString()
+            row[timeKey]=new Date(row[timeKey]).toUTCString();
         })
     }
     return {tableData: arr, key: Object.keys(arr[0]).filter(name=>!fields?true:fields.includes(name)).map(name=>({label: name.split("_").join(" "), field:name}))}
