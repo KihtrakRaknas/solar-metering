@@ -4,7 +4,12 @@ import parse from 'csv-parse';
 import Table from './components/Table';
 import NoData from './components/NoData';
 import Graph from './components/Graph';
-
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 
 function App() {
   const [data, setData] = useState([]);
@@ -23,41 +28,69 @@ function App() {
       else
         setData(output)
     })
-
-    // Trying to display data Sammi outlined was most important. I want to get the two graphs to coexist somehow, with one graph being
-    // a bit more prominent than the other.  
-
-    /*const logFile2 = raw("../please1.csv")
-
-    parse(logFile2, {
-      comment: '#',
-      delimiter: ',',
-      columns: true
-    }, function(err, output){
-      // console.log(output)
-      if(err)
-        console.error(err)
-      else
-        setData(output)
-    }) */
   }
 
   useEffect(update, [true])
 
   return (
-    <div className="App">
-      <div className="title_component">
-        <header className="App-header">
-          <h1 className="App-title">Real-Time Solar Output (updates [hourly?] [daily?] [weekly?])</h1>
-        </header>
-      </div>
+    <Router>
+      <div>
+        <nav>
+          <ul>
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li>
+              <Link to="/full-table">FullTable</Link>
+            </li>
+          </ul>
+        </nav>
 
-      {data.length > 0 ? <Graph data={data} /> : <NoData />}
-      <div style={{ padding: 15, overflowX: "auto" }}>
-        {data.length > 0 ? <><Table data={data} fields={["time (UTC)", "Vb_max_daily", "Vb_min_daily", "Whc_daily", "alarm_daily"]} /><Table data={data}/></> : <NoData />}
+        <Switch>
+          <Route path="/full-table">
+            <FullTable />
+          </Route>
+          <Route path="/">
+            <Home />
+          </Route>
+        </Switch>
       </div>
-    </div>
+    </Router>
   );
-}
 
+  /** Home page will contain output and table with most important data */
+  function Home() {
+    return (
+      <div className="App">
+        <div className="title_component">
+          <header className="App-header">
+            <h1 className="App-title">Real-Time Solar Output (updates [hourly?] [daily?] [weekly?])</h1>
+          </header>
+        </div>
+  
+        {data.length > 0 ? <Graph data={data} /> : <NoData />}
+        <div style={{ padding: 15, overflowX: "auto" }}>
+          {data.length > 0 ? <><Table data={data} fields={["time (UTC)", "Vb_max_daily", "Vb_min_daily", "Whc_daily", "alarm_daily"]}/></> : <NoData />}
+        </div>
+      </div>
+    );
+  }
+  
+  /** This page will contain all table data */
+  function FullTable() {
+    return (
+      <div className="App">
+        <div className="title_component">
+          <header className="App-header">
+            <h1 className="App-title">Complete Solar Data from MSView</h1>
+          </header>
+        </div>
+  
+        <div style={{ padding: 15, overflowX: "auto" }}>
+          {data.length > 0 ? <><Table data={data}/></> : <NoData />}
+        </div>
+      </div>
+    );
+  }  
+}
 export default App;
