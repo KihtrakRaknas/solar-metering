@@ -33,7 +33,7 @@ function App() {
   useEffect(update, [true])
 
   return (
-    <Router>
+    <Router basename="/solar-metering">
       <div>
         <nav>
           <ul>
