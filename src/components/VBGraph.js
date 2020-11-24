@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { VictoryChart, VictoryArea, VictoryAxis, VictoryTheme, VictoryStack, VictoryLegend, VictoryLabel } from 'victory';
+import { VictoryChart, VictoryLine, VictoryAxis, VictoryTheme, VictoryStack, VictoryLegend, VictoryLabel } from 'victory';
 import prepDataForTable from '../helperFunctions/prepDataForTable';
 
-export default function Table(props) {
+export default function VBGraph(props) {
     const { tableData } = prepDataForTable(props.data)
     const categories = ["Vb min daily", "Vb max daily"]
     const windowSize = useWindowSize();
@@ -15,14 +15,14 @@ export default function Table(props) {
                 width={windowSize.width - 10}
                 scale={{ x: "time", y: "linear" }}
             >
-                <VictoryStack animate>
+                <VictoryStack animate colorScale={["black", "red"]}>
                     {createStack(categories, tableData)}
                     {/* <AreaVsTime yAxis="Vb max daily" tableData={tableData}/> */}
                     {/* <AreaVsTime yAxis="Vb max daily" tableData={tableData}/>
                     <AreaVsTime yAxis="Vb min daily" tableData={tableData}/> */}
                 </VictoryStack>
                 <VictoryAxis axisLabelComponent={<VictoryLabel dy={20} />} label="Date" />
-                <VictoryAxis axisLabelComponent={<VictoryLabel dy={-20} />} label="Value" dependentAxis />
+                <VictoryAxis axisLabelComponent={<VictoryLabel dy={-20} />} label="Vb Value (unit goes here)" dependentAxis />
             </VictoryChart>
             {/* <VictoryLegend 
                 //   x={125} y={50}
@@ -57,7 +57,7 @@ function createStack(categories, tableData) {
             total = total.map((element, index) => element + newData[index].y);
         }
         console.log(newData)
-        result.push(<VictoryArea data={newData} />)
+        result.push(<VictoryLine data={newData} />)
     }
     return result
 }
@@ -67,61 +67,24 @@ function getVsTime(yAxis, tableData) {
 }
 
 function useWindowSize() {
-
-    // Initialize state with undefined width/height so server and client renders match
-
-    // Learn more here: https://joshwcomeau.com/react/the-perils-of-rehydration/
-
     const [windowSize, setWindowSize] = useState({
-
         width: undefined,
-
         height: undefined,
-
     });
-
-
-
     useEffect(() => {
-
         // Handler to call on window resize
-
         function handleResize() {
-
-            // Set window width/height to state
-
             setWindowSize({
-
                 width: window.innerWidth,
-
                 height: window.innerHeight,
-
             });
-
         }
-
-
-
         // Add event listener
-
         window.addEventListener("resize", handleResize);
-
-
-
         // Call handler right away so state gets updated with initial window size
-
         handleResize();
-
-
-
         // Remove event listener on cleanup
-
         return () => window.removeEventListener("resize", handleResize);
-
     }, []); // Empty array ensures that effect is only run on mount
-
-
-
     return windowSize;
-
 }
