@@ -4,6 +4,7 @@ import parse from 'csv-parse';
 import Table from './components/Table';
 import NoData from './components/NoData';
 import VBGraph from './components/VBGraph';
+import WHCGraph from './components/WHCGraph';
 import {
   BrowserRouter as Router,
   Switch,
@@ -69,6 +70,7 @@ function App() {
         </div>
   
         {data.length > 0 ? <VBGraph data={data} /> : <NoData />}
+        {data.length > 0 ? <WHCGraph data={data} /> : <NoData />}
         
         <div style={{ padding: 15, overflowX: "auto" }}>
           {data.length > 0 ? <><Table data={data} fields={["time (UTC)", "Vb_max_daily", "Vb_min_daily", "Whc_daily", "alarm_daily"]}/></> : <NoData />}
