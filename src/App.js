@@ -73,7 +73,7 @@ function App() {
         {data.length > 0 ? <WHCGraph data={data} /> : <NoData />}
         
         <div style={{ padding: 15, overflowX: "auto" }}>
-          {data.length > 0 ? <><Table data={data} fields={["time (UTC)", "Vb_max_daily", "Vb_min_daily", "Whc_daily", "alarm_daily"]}/></> : <NoData />}
+          {data.length > 0 ? <><Table data={data} fields={["time (UTC)", "Vb_max_daily", "Vb_min_daily", "Whc_daily", "alarm_daily", "fault_daily"]}/></> : <NoData />}
         </div>
       </div>
     );
