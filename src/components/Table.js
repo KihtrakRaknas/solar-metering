@@ -4,8 +4,7 @@ import prepDataForTable from '../helperFunctions/prepDataForTable';
 
 export default function Table(props) {
     const {key, tableData} = prepDataForTable(props.data, props.fields)
-    // console.log(tableData)
-    // console.log(props.data)
+    console.log(props.reverse)
     return (
         <MDBDataTable
             striped
@@ -13,10 +12,11 @@ export default function Table(props) {
             //responsive
             small
             //scrollX
-            
+            hover 
+            sortable={false}
             data={{
                 columns:key,
-                rows:tableData
+                rows:props.reverse?tableData:[...tableData].reverse() /* I have no clue why the spread syntax makes it work but it does */
             }}
         />
     )
