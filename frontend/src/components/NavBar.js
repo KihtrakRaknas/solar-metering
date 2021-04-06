@@ -31,7 +31,7 @@ export default function NavBar({ firebaseTimestamp }) {
             <nav>
                 <MDBNavbar color="gray" expand="md" fixed="top" scrolling style={{backgroundColor:"white"}}>
                     <MDBNavbarBrand>
-                        <strong className="black-text">Solor Metering</strong>
+                        <strong className="black-text">Solar Metering</strong>
                     </MDBNavbarBrand>
                     <MDBNavLink to="/home">Graphs</MDBNavLink>
                     <MDBNavLink to="/full-table">Full Table</MDBNavLink>
@@ -45,7 +45,11 @@ export default function NavBar({ firebaseTimestamp }) {
                                 :
                                     `Last upload was ${timeObj.hours} hours and ${timeObj.days} days ago`
                         :
-                            `Logs are from ${timeObj.hoursFixed} hours and ${timeObj.days} days ago`}
+                            firebaseTimestamp!=-1?
+                                `Logs are from ${timeObj.hoursFixed} hours and ${timeObj.days} days ago`
+                            :
+                                ``
+                        }
                     </div>
                 </MDBNavbar>
             </nav>
