@@ -1,0 +1,15 @@
+{
+  "scripts": {
+    "deploy": "git-directory-deploy --directory ./ --branch logfile-server-production"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "csv-parse": "^4.15.3",
+    "deep-equal": "^2.0.5",
+    "express": "^4.17.1",
+    "firebase-admin": "^9.6.0"
+  },
+  "devDependencies": {
+    "git-directory-deploy": "^1.5.1"
+  }
+}
