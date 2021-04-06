@@ -24,13 +24,13 @@ const uploadToFirebase = () =>{
         if(!equal(lastLogFile,data)){
             console.log("log file changed, uploading new version")
             lastLogFile = data
-            logFileRef.set({data})
+            logFileRef.set({data, timestamp: firebase.firestore.FieldValue.serverTimestamp()})
         }
     })
 }
 
 const logFileJSON = (callback)=>{
-    fs.readFile('./please.csv', 'utf8', (err, data) => {
+    fs.readFile('./please.csv', 'utf8', (err, data) => { // "C:/Program Files (x86)/Morningstar Corporation/MSView/please.csv"
         if (err) {
             console.error(err)
             return
