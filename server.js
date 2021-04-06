@@ -24,7 +24,7 @@ const uploadToFirebase = () =>{
         if(!equal(lastLogFile,data)){
             console.log("log file changed, uploading new version")
             lastLogFile = data
-            logFileRef.set({data, timestamp: firebase.firestore.FieldValue.serverTimestamp()})
+            logFileRef.set({data:data, timestamp: admin.firestore.FieldValue.serverTimestamp()})
         }
     })
 }
