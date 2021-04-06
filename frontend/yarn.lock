@@ -3063,7 +3063,7 @@ babel-plugin-jest-hoist@^26.5.0:
     "@types/babel__core" "^7.0.0"
     "@types/babel__traverse" "^7.0.6"
 
-babel-plugin-macros@2.8.0, babel-plugin-macros@^2.8.0:
+babel-plugin-macros@2.8.0:
   version "2.8.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-macros/-/babel-plugin-macros-2.8.0.tgz#0f958a7cc6556b1e65344465d99111a1e5e10138"
   integrity sha512-SEP5kJpfGYqYKpBrj5XU3ahw5p5GOHJ0U5ssOSQ/WBVdwkD2Dzlce95exQTs3jOVWPPKLBN2rlEWkCK7dSmLvg==
@@ -4755,11 +4755,6 @@ csstype@^3.0.2:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.0.4.tgz#b156d7be03b84ff425c9a0a4b1e5f4da9c5ca888"
   integrity sha512-xc8DUsCLmjvCfoD7LTGE0ou2MIWLx0K9RCZwSHMOdynqRsP4MtUcLeqh1HcQ2dInwDTqn+3CE0/FZh1et+p4jA==
-
-csv-parse@^4.12.0:
-  version "4.12.0"
-  resolved "https://registry.yarnpkg.com/csv-parse/-/csv-parse-4.12.0.tgz#fd42d6291bbaadd51d3009f6cadbb3e53b4ce026"
-  integrity sha512-wPQl3H79vWLPI8cgKFcQXl0NBgYYEqVnT1i6/So7OjMpsI540oD7p93r3w6fDSyPvwkTepG05F69/7AViX2lXg==
 
 cubic-hermite@^1.0.0:
   version "1.0.0"
@@ -11847,13 +11842,6 @@ raw-body@2.4.0:
     http-errors "1.7.2"
     iconv-lite "0.4.24"
     unpipe "1.0.0"
-
-raw.macro@^0.4.2:
-  version "0.4.2"
-  resolved "https://registry.yarnpkg.com/raw.macro/-/raw.macro-0.4.2.tgz#1954f9a36465d9400a76b8b68438e4ec8582acd6"
-  integrity sha512-Z+zKtCweyJ3lGYdUNq/BQwfzqQE2wrXjz0RNEes5nDniPpjvBw64sKYFXStJSfmZUmiBxv4DsN1lto982UAhFQ==
-  dependencies:
-    babel-plugin-macros "^2.8.0"
 
 react-app-polyfill@^2.0.0:
   version "2.0.0"

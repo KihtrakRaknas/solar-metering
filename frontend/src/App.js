@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import raw from "raw.macro";
-import parse from 'csv-parse';
 
 import Home from './screens/Home';
 import FullTable from './screens/FullTable';
@@ -32,13 +30,26 @@ const db = firebase.firestore();
 
 function App() {
   const [data, setData] = useState([]);
+  const [firebaseTimestamp, setFirebaseTimestamp] = useState(-1);
 
   let update = () => {
     console.log("fetching!")
     fetch('http://localhost:4001/logfile').then(res=>res.json()).then(data=>{
       console.log(data)
       setData(data)
+      if(global.firebaseListener){
+        global.firebaseListener() //unsubscribe
+        global.firebaseListener = null
+      }
     }).catch(err=>{
+      if(global.firebaseListener == null){
+        const logFileRef = db.collection('logData').doc("data");
+        global.firebaseListener = logFileRef.onSnapshot((doc) => {
+          setData(doc.data().data)
+          console.log(doc.data().timestamp.seconds)
+          setFirebaseTimestamp(doc.data().timestamp.seconds * 1000)
+        });
+      }
       console.log(err)
     })
   }
@@ -50,7 +61,7 @@ function App() {
 
   return (
     <Router basename="/solar-metering">
-      <NavBar/>
+      <NavBar firebaseTimestamp={firebaseTimestamp}/>
 
       <Switch>
         <Route path="/full-table">

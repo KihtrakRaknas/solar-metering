@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { MDBNavbar, MDBNavbarBrand, MDBNavItem, MDBNavLink } from 'mdbreact';
 
-export default function NavBar({}) {
+export default function NavBar({ firebaseTimestamp }) {
     const [lastWrite, setLastWrite] = useState(null);
 
     const checkLastWrite = ()=>{
@@ -15,17 +15,17 @@ export default function NavBar({}) {
 
     useEffect(()=>{
         checkLastWrite()
-        setInterval(checkLastWrite, 1000*60*5) // Update last write every 5 minutes
+        setInterval(checkLastWrite, 1000*30) // Update last write every 30 seconds
     }, [true])
 
     const calcDiffInTime = (timestamp) =>{
         const diff = (new Date()) - timestamp
         const diffInHrs = diff/(1000*60*60)
-        return {hours: Math.floor(diffInHrs % 24), days: Math.floor(diffInHrs/24), recent: diffInHrs<1}
+        return {hours: Math.floor(diffInHrs % 24), days: Math.floor(diffInHrs/24), recent: diffInHrs<1, hoursFixed: (diffInHrs % 24).toFixed(2)}
     }
 
-    let timeObj = calcDiffInTime(lastWrite)
-    
+    let timeObj = calcDiffInTime(lastWrite != -1 && lastWrite != null? lastWrite : firebaseTimestamp)
+
     return (
         <>
             <nav>
@@ -45,7 +45,7 @@ export default function NavBar({}) {
                                 :
                                     `Last upload was ${timeObj.hours} hours and ${timeObj.days} days ago`
                         :
-                            "View Only"}
+                            `Logs are from ${timeObj.hoursFixed} hours and ${timeObj.days} days ago`}
                     </div>
                 </MDBNavbar>
             </nav>
