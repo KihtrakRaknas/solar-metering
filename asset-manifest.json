@@ -1,27 +1,27 @@
 {
   "files": {
-    "main.css": "/solar-metering/static/css/main.0d183a93.chunk.css",
-    "main.js": "/solar-metering/static/js/main.a1ec6fbe.chunk.js",
-    "main.js.map": "/solar-metering/static/js/main.a1ec6fbe.chunk.js.map",
-    "runtime-main.js": "/solar-metering/static/js/runtime-main.fd92e1a5.js",
-    "runtime-main.js.map": "/solar-metering/static/js/runtime-main.fd92e1a5.js.map",
-    "static/css/2.fabcddcc.chunk.css": "/solar-metering/static/css/2.fabcddcc.chunk.css",
-    "static/js/2.788e4b32.chunk.js": "/solar-metering/static/js/2.788e4b32.chunk.js",
-    "static/js/2.788e4b32.chunk.js.map": "/solar-metering/static/js/2.788e4b32.chunk.js.map",
-    "static/js/3.c6681835.chunk.js": "/solar-metering/static/js/3.c6681835.chunk.js",
-    "static/js/3.c6681835.chunk.js.map": "/solar-metering/static/js/3.c6681835.chunk.js.map",
-    "index.html": "/solar-metering/index.html",
-    "static/css/2.fabcddcc.chunk.css.map": "/solar-metering/static/css/2.fabcddcc.chunk.css.map",
-    "static/css/main.0d183a93.chunk.css.map": "/solar-metering/static/css/main.0d183a93.chunk.css.map",
-    "static/js/2.788e4b32.chunk.js.LICENSE.txt": "/solar-metering/static/js/2.788e4b32.chunk.js.LICENSE.txt",
-    "static/media/mdb.css": "/solar-metering/static/media/arrow_right.0897f985.svg",
-    "static/media/all.min.css": "/solar-metering/static/media/fa-solid-900.46fdbd2d.woff"
+    "main.css": "./static/css/main.0d183a93.chunk.css",
+    "main.js": "./static/js/main.0ffc653f.chunk.js",
+    "main.js.map": "./static/js/main.0ffc653f.chunk.js.map",
+    "runtime-main.js": "./static/js/runtime-main.a58ef9c2.js",
+    "runtime-main.js.map": "./static/js/runtime-main.a58ef9c2.js.map",
+    "static/css/2.7f0c093d.chunk.css": "./static/css/2.7f0c093d.chunk.css",
+    "static/js/2.9965e967.chunk.js": "./static/js/2.9965e967.chunk.js",
+    "static/js/2.9965e967.chunk.js.map": "./static/js/2.9965e967.chunk.js.map",
+    "static/js/3.46edcb36.chunk.js": "./static/js/3.46edcb36.chunk.js",
+    "static/js/3.46edcb36.chunk.js.map": "./static/js/3.46edcb36.chunk.js.map",
+    "index.html": "./index.html",
+    "static/css/2.7f0c093d.chunk.css.map": "./static/css/2.7f0c093d.chunk.css.map",
+    "static/css/main.0d183a93.chunk.css.map": "./static/css/main.0d183a93.chunk.css.map",
+    "static/js/2.9965e967.chunk.js.LICENSE.txt": "./static/js/2.9965e967.chunk.js.LICENSE.txt",
+    "static/media/mdb.css": "./static/media/arrow_right.0897f985.svg",
+    "static/media/all.min.css": "./static/media/fa-solid-900.46fdbd2d.woff"
   },
   "entrypoints": [
-    "static/js/runtime-main.fd92e1a5.js",
-    "static/css/2.fabcddcc.chunk.css",
-    "static/js/2.788e4b32.chunk.js",
+    "static/js/runtime-main.a58ef9c2.js",
+    "static/css/2.7f0c093d.chunk.css",
+    "static/js/2.9965e967.chunk.js",
     "static/css/main.0d183a93.chunk.css",
-    "static/js/main.a1ec6fbe.chunk.js"
+    "static/js/main.0ffc653f.chunk.js"
   ]
 }
