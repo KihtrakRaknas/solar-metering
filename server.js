@@ -18,17 +18,13 @@ const logFileRef = db.collection('logData').doc("data");
 
 const equal = require('deep-equal');
 let lastLogFile;
-let lastWrite = -1
 
 const uploadToFirebase = () =>{
     logFileJSON((data)=>{
         if(!equal(lastLogFile,data)){
             console.log("log file changed, uploading new version")
             lastLogFile = data
-            logFileRef.set({data}).then(()=>{
-                console.log("Write confirmed")
-                lastWrite = new Date().getTime()
-            })
+            logFileRef.set({data})
         }
     })
 }
@@ -58,12 +54,6 @@ app.get('/logfile', (req, res) => {
     console.log("logfile request received")
     logFileJSON((data)=>res.json(data))
 })
-
-app.get('/last-write', (req, res) => {
-    res.json({ lastWrite })
-})
-
-
 
 app.listen(port, () => {
     console.log(`Server listening at http://localhost:${port}`)

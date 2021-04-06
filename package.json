@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "deploy": "git-directory-deploy --directory ./ --branch logfile-server-production"
+    "deploy": "git-directory-deploy --directory ./ --branch logfile-server-production --username automated-deploy"
   },
   "dependencies": {
     "cors": "^2.8.5",
