@@ -4,7 +4,7 @@ import Home from './screens/Home';
 import FullTable from './screens/FullTable';
 import NavBar from './components/NavBar';
 import {
-  BrowserRouter as Router,
+  HashRouter as Router,
   Switch,
   Route,
   Link
