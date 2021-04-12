@@ -34,7 +34,7 @@ const uploadToFirebase = () =>{
 }
 
 const logFileJSON = (callback)=>{
-    fs.readFile('./please.csv', 'utf8', (err, data) => { // "C:/Program Files (x86)/Morningstar Corporation/MSView/please.csv"
+    fs.readFile('C:/Program Files (x86)/Morningstar Corporation/MSView/please.csv', 'utf8', (err, data) => { // './please.csv'
         if (err) {
             console.error(err)
             return
