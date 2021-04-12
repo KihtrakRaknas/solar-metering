@@ -6,11 +6,16 @@ export default function prepDataForTable(arr, fields) {
     //     return rowObj
     // })
     // return {key, tableData}
-    for(let timeKey of Object.keys(arr[0]).filter(el=>el.includes("time"))){
-        arr.forEach(row=>{
-            row[timeKey] = new Date(row[timeKey]).toUTCString();
-        })
-    }
+
+    // for(let timeKey of Object.keys(arr[0]).filter(el=>el.includes("time"))){
+    //     arr.forEach(row=>{
+    //         row[timeKey] = new Date(row[timeKey]).toUTCString();
+    //     })
+    // }
+    arr.forEach(row=>{
+        const timeKey = "time (UTC)"
+        row[timeKey] = new Date(row[timeKey]).toUTCString();
+    })
 
     const key = Object.keys(arr[0])
     .filter(name=>!fields?true:fields.includes(name))
