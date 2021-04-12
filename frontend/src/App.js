@@ -10,10 +10,8 @@ import {
   Link
 } from "react-router-dom";
 import firebase from "firebase";
-
-const fetch = require('node-fetch');
-
 require("firebase/firestore");
+
 try {
   firebase.initializeApp({
     apiKey: "AIzaSyD2K0qINs7uoG6-2whLT8Wgab_AvAhVEzI",
@@ -60,7 +58,7 @@ function App() {
   }, [true])
 
   return (
-    <Router basename="/solar-metering">
+    <Router /*basename="/solar-metering"*/>
       <NavBar firebaseTimestamp={firebaseTimestamp}/>
 
       <Switch>
