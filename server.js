@@ -14,7 +14,19 @@ admin.initializeApp({
     databaseURL: "https://sierra-leone-cec24.firebaseapp.com"
 });
 const db = admin.firestore();
-const logFileRef = db.collection('logData').doc("data");
+let logFileRef = db.collection('logData').doc(""+(new Date()).getUTCFullYear());
+
+const cron = require('node-cron');
+
+//The following cron job covers the edge case that the year changes while the server is running
+cron.schedule('1 0 1 JAN *', () => {
+  console.log('***** A NEW YEAR HAS STARTED *****');
+  logFileRef = db.collection('logData').doc(""+(new Date()).getUTCFullYear());
+}, {
+    scheduled: true,
+    timezone: "UTC"
+});
+
 
 const equal = require('deep-equal');
 let lastLogFile;
