@@ -18,14 +18,21 @@ let logFileRef = db.collection('logData').doc(""+(new Date()).getUTCFullYear());
 
 const cron = require('node-cron');
 
+
+const PATHTOFILE = true?'C:/Program Files (x86)/Morningstar Corporation/MSView/please.csv':'./please.csv'
+
+
+
 //The following cron job covers the edge case that the year changes while the server is running
-cron.schedule('1 0 1 JAN *', () => {
+cron.schedule('0 0 1 JAN *', () => {
   console.log('***** A NEW YEAR HAS STARTED *****');
   logFileRef = db.collection('logData').doc(""+(new Date()).getUTCFullYear());
+  fs.writeFileSync(PATHTOFILE,null)
 }, {
     scheduled: true,
     timezone: "UTC"
 });
+
 
 
 const equal = require('deep-equal');
@@ -46,7 +53,7 @@ const uploadToFirebase = () =>{
 }
 
 const logFileJSON = (callback)=>{
-    fs.readFile(true?'C:/Program Files (x86)/Morningstar Corporation/MSView/please.csv':'./please.csv', 'utf8', (err, data) => {
+    fs.readFile(PATHTOFILE, 'utf8', (err, data) => {
         if (err) {
             console.error(err)
             return
