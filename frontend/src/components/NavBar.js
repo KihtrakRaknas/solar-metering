@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { MDBNavbar, MDBNavbarBrand, MDBNavItem, MDBNavLink } from 'mdbreact';
 
-export default function NavBar({ firebaseTimestamp }) {
+export default function NavBar({ firebaseTimestamp, year }) {
     const [lastWrite, setLastWrite] = useState(null);
 
     const checkLastWrite = ()=>{
@@ -35,6 +35,7 @@ export default function NavBar({ firebaseTimestamp }) {
                     </MDBNavbarBrand>
                     <MDBNavLink to="/home">Graphs</MDBNavLink>
                     <MDBNavLink to="/full-table">Full Table</MDBNavLink>
+                    {firebaseTimestamp != -1 && <MDBNavLink to="/historical-data">Historical Data {(new Date()).getUTCFullYear() != year?`(${year})`:``}</MDBNavLink>}
                     <div className="ml-auto">
                         {lastWrite != null? 
                             lastWrite == -1? 
@@ -45,7 +46,7 @@ export default function NavBar({ firebaseTimestamp }) {
                                 :
                                     `Last upload was ${timeObj.hours} hours and ${timeObj.days} days ago`
                         :
-                            firebaseTimestamp!=-1?
+                            firebaseTimestamp != -1?
                                 `Logs are from ${timeObj.hoursFixed} hours and ${timeObj.days} days ago`
                             :
                                 ``

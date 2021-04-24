@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import Home from './screens/Home';
 import FullTable from './screens/FullTable';
+import HistoricalData from './screens/HistoricalData';
 import NavBar from './components/NavBar';
 import {
   HashRouter as Router,
@@ -29,6 +30,7 @@ const db = firebase.firestore();
 function App() {
   const [data, setData] = useState([]);
   const [firebaseTimestamp, setFirebaseTimestamp] = useState(-1);
+  const [year, setYear] = useState((new Date()).getUTCFullYear());
 
   let update = () => {
     console.log("fetching!")
@@ -41,7 +43,7 @@ function App() {
       }
     }).catch(err=>{
       if(global.firebaseListener == null){
-        const logFileRef = db.collection('logData').doc("data");
+        const logFileRef = db.collection('logData').doc(""+year);
         global.firebaseListener = logFileRef.onSnapshot((doc) => {
           setData(doc.data().data)
           console.log(doc.data().timestamp.seconds)
@@ -59,11 +61,14 @@ function App() {
 
   return (
     <Router /*basename="/solar-metering"*/>
-      <NavBar firebaseTimestamp={firebaseTimestamp}/>
+      <NavBar firebaseTimestamp={firebaseTimestamp} year={year}/>
 
       <Switch>
         <Route path="/full-table">
           <FullTable data={data} />
+        </Route>
+        <Route path="/historical-data">
+          <HistoricalData year={year} setYear={setYear}/>
         </Route>
         <Route path="/">
           <Home data={data} />
