@@ -13,8 +13,8 @@ export default function Home({ data }) {
                 </header>
             </div>
 
-            {data.length > 0 ? <Graph data={data} categories={["Vb min daily", "Vb max daily"]} title="Vb Over Time" yTitle="Vb Value (unit goes here)" /> : <NoData />}
-            {data.length > 0 ? <Graph data={data} categories={["Whc daily"]} title="Whc Value" yTitle="Whc Value (unit goes here)" /> : <NoData />}
+            {data.length > 0 ? <Graph data={data} categories={["Vb min daily", "Vb max daily"]} title="Daily Battery Voltage" yTitle="Voltage (volts)" /> : <NoData />}
+            {data.length > 0 ? <Graph data={data} categories={["Whc daily"]} title="Daily Energy Output" yTitle="Watt Hours" /> : <NoData />}
 
             <div style={{ padding: 15, overflowX: "auto" }}>
                 {data.length > 0 ? <><Table data={data} fields={["time (UTC)", "Vb_max_daily", "Vb_min_daily", "Whc_daily", "alarm_daily"]} /></> : <NoData />}
