@@ -19,7 +19,7 @@ let logFileRef = db.collection('logData').doc(""+(new Date()).getUTCFullYear());
 const cron = require('node-cron');
 
 
-const PATHSTOFILES = ['./data_24.csv','./data_49.csv']
+const PATHSTOFILES = ['./cc1.csv','./cc2.csv','./cc3.csv']
 
 
 
