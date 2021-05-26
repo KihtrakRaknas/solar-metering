@@ -14,7 +14,27 @@ admin.initializeApp({
     databaseURL: "https://sierra-leone-cec24.firebaseapp.com"
 });
 const db = admin.firestore();
-const logFileRef = db.collection('logData').doc("data");
+let logFileRef = db.collection('logData').doc(""+(new Date()).getUTCFullYear());
+
+const cron = require('node-cron');
+
+
+const PATHSTOFILES = ['./cc1.csv','./cc2.csv','./cc3.csv']
+
+
+
+//The following cron job covers the edge case that the year changes while the server is running
+cron.schedule('0 0 1 JAN *', () => {
+  console.log('***** A NEW YEAR HAS STARTED *****');
+  logFileRef = db.collection('logData').doc(""+(new Date()).getUTCFullYear());
+  for(let path of PATHSTOFILES)
+    fs.writeFileSync(path,null)
+}, {
+    scheduled: true,
+    timezone: "UTC"
+});
+
+
 
 const equal = require('deep-equal');
 let lastLogFile;
@@ -22,6 +42,7 @@ let lastWrite = -1
 
 const uploadToFirebase = () =>{
     logFileJSON((data)=>{
+        // console.log(data)
         if(!equal(lastLogFile,data)){
             console.log("log file changed, uploading new version")
             lastLogFile = data
@@ -34,24 +55,38 @@ const uploadToFirebase = () =>{
 }
 
 const logFileJSON = (callback)=>{
-    fs.readFile(true?'C:/Program Files (x86)/Morningstar Corporation/MSView/please.csv':'./please.csv', 'utf8', (err, data) => {
-        if (err) {
-            console.error(err)
-            return
+    let promises = []
+    let dataObj = {}
+    for(let path of PATHSTOFILES){
+        const fileDataPromise = new Promise((res,rej)=>{
+            fs.readFile(path, 'utf8', (err, data) => {
+                if (err) {
+                    console.error(err)
+                    return
+                }
+                parse(data, {
+                    comment: '#',
+                    delimiter: ',',
+                    columns: true
+                }, function (err, output) {
+                    // console.log(output)
+                    if (err)
+                        console.error(err)
+                    else {
+                        res(output)
+                    }
+                })  
+            })
+        })
+        promises.push(fileDataPromise)
+    }
+    Promise.all(promises).then((promises)=>{
+        for(let pathIndex in PATHSTOFILES){
+            const path = PATHSTOFILES[pathIndex].replace(/[|&;$%@"<>()+,./]/g, "")
+            dataObj[path] = promises[pathIndex]
         }
-        parse(data, {
-            comment: '#',
-            delimiter: ',',
-            columns: true
-        }, function (err, output) {
-            // console.log(output)
-            if (err)
-                console.error(err)
-            else {
-                callback(output)
-            }
-        })  
-    })
+        callback(dataObj)
+    }).catch(console.log)
 }
 
 app.get('/logfile', (req, res) => {
