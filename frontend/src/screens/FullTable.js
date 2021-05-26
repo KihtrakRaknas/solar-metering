@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Table from '../components/Table';
 import NoData from '../components/NoData';
 import { MDBBtn } from 'mdbreact';
+import { fileNames } from '../helperFunctions/globals'
 
 /** This page will contain all table data */
 export default function FullTable({ data }) {
@@ -16,7 +17,7 @@ export default function FullTable({ data }) {
             </div>
             <br/>
             <div style={{ padding: 15, overflowX: "auto" }}>
-                {data.length > 0 ? <><Table data={data} reverse={reverse}/></> : <NoData />}
+                {Object.keys(data).length > 0 ? fileNames.map((filename)=><><h1 className="title" style={{ textAlign: "center" }}>{filename}</h1><Table data={data[filename]} reverse={reverse}/></>) : <NoData />}
                 <div style={{textAlign:"center"}}>
                     <MDBBtn gradient={reverse?"peach":"purple"} onClick={()=>setReverse(!reverse)}>Reverse Order</MDBBtn>
                 </div>

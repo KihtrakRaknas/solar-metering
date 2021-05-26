@@ -11,7 +11,7 @@ export default function Table(props) {
             borderless    
             //responsive
             small
-            //scrollX
+            scrollX
             hover 
             sortable={false}
             data={{
