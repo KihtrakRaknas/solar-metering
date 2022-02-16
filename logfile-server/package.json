@@ -1,16 +1,7 @@
 {
-  "scripts": {
-    "deploy": "git-directory-deploy --directory ./ --branch logfile-server-production --username automated-deploy"
-  },
   "dependencies": {
-    "cors": "^2.8.5",
-    "csv-parse": "^4.15.3",
-    "deep-equal": "^2.0.5",
-    "express": "^4.17.1",
-    "firebase-admin": "^9.6.0",
-    "node-cron": "^3.0.0"
-  },
-  "devDependencies": {
-    "git-directory-deploy": "^1.5.1"
+    "dotenv": "^10.0.0",
+    "express": "4",
+    "socket.io": "^4.3.1"
   }
 }

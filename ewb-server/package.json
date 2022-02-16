@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "express": "4",
+    "firstline": "^2.0.2",
+    "fs-reverse": "^0.0.3",
+    "read-last-lines": "^1.8.0",
+    "sanitize-filename": "^1.6.3",
+    "socket.io": "^4.3.1"
+  }
+}
