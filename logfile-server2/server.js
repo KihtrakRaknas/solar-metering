@@ -7,7 +7,9 @@ const parse = require('csv-parse');
 const fs = require('fs')
 const readline = require('readline');
 const { io } = require("socket.io-client");
-const fsR = require('fs-reverse');
+const lineReader = require('reverse-line-reader');
+
+let lastWrite = -1
 
 const socket = io(process.env.SOCKETADDRESS,{  auth: {id: process.env.ID, token: process.env.AUTHTOKEN}});
 
@@ -18,50 +20,67 @@ socket.on("connect_error", (err) => {
 });
 
 socket.on("connect", () => {  
-    console.log("Connection to Main Server Established\n");
+    console.log("Connection to main server established");
 
     // Don't start until we have the last timestamps
-    socket.on('lastTimeStamps', (lastTimestamps)=>{
-        console.log(lastTimestamps)
-        for(let index in lastTimestamps){
-            const timestamp = typeof lastTimestamps[index] == "string"?lastTimestamps[index].split(`"`).join(""):0
-            lastTimestamps[index] = timestamp
-        }
-        
-        console.log(`Timestamp received from main server: ${JSON.stringify(lastTimestamps)}\n`);
+    socket.on('lastTimeStamp', (lastTimestamp)=>{
+        lastWrite = lastTimestamp
+        console.log(`Timestamp received from main server: ${new Date(lastTimestamp)} - ${JSON.stringify(lastTimestamp)}`);
+        const fileHeaderArr = {}
         const fileTimeIndex = {}
+        dataToUpload = []
         const uploadIfNeeded = async () =>{
-            for(let path of process.env.PATHSTOUPLOAD){
-                const fileName = path.split(",")[path.split(",").length - 1]
+            for(let path of process.env.PATHSTOUPLOAD.split(" ")){
+                if(!fs.existsSync(path)){
+                    console.log(`File at ${path} does not exist`)
+                    continue
+                }
+                // const fileName = path.split(",")[path.split(",").length - 1]
                 if (!fileTimeIndex[path]){
                     const header = await getFirstLine(`${path}`)
-                    const timeIndex = header.split(",").findIndex("time (UTC)")
+                    fileHeaderArr[path] = header.split(",").map(removeQuotes)
+                    const timeIndex = fileHeaderArr[path].findIndex((el) => el == `time (UTC)`)
                     fileTimeIndex[path] = timeIndex
                 }
                 const fileDataPromise = new Promise((res,rej)=>{
                     let lines = []
-                    const stream = fsR(path, {})
-                    stream.on("data", function (line) {
-                        if(new Date(line.split(",")[fileTimeIndex[path]]).getTime() > lastTimestamps[fileName]){
-                            lines.push(line)
-                        }else{
-                            stream.close()
-                            res(lines)
+                    lineReader.eachLine(path, function (line, last) {
+                        const lineArr = line.split(",").map(removeQuotes)
+                        const lineTime = new Date(lineArr[fileTimeIndex[path]]).getTime()
+                        if(!lineTime){
+                            return true // skip line
                         }
-                    });
+                        if(lineTime > lastTimestamp){
+                            let lineObj = {}
+                            // TODO: Figure out why the object have 1 property consisting of every header
+                            for(let i in lineArr){
+                                lineObj[fileHeaderArr[path][i]] = lineArr[i]
+                            }
+                            lines.push(lineObj)
+                        }else{
+                            // res([lines,path])
+                            return false
+                        }
+                    }).then(()=>{
+                        res([lines,path])
+                    })
                 })
+                dataToUpload.push(fileDataPromise)
             }
 
-            Promise.all(promises).then((promises)=>{
-                for(let lines of promises){
-                    socket.emit('data update', lines);
+            Promise.all(dataToUpload).then((dataToUploadResovled)=>{
+                for(let [lines, path] of dataToUploadResovled){
+                    if(lines.length > 0){
+                        socket.emit('data update', [lines, path]);
+                        console.log(`Sending ${lines.length} data points from file: ${path}`);
+                    }
                 }
             })
         }
         
         uploadIfNeeded()
-        setInterval(uploadIfNeeded, 60*1000); //Try to upload once every minute
-        lastTimestamps
+        // Instead, we are going to only upload when we get a request from the main server
+        // setInterval(uploadIfNeeded, 60*1000); //Try to upload once every minute
     })
 });
 
@@ -106,14 +125,15 @@ const getlogFileAsJSON = (callback)=>{
 //     getlogFileAsJSON((data)=>res.json(data))
 // })
 
-// app.get('/last-write', (req, res) => {
-//     res.json({ lastWrite })
-// })
-
-app.listen(process.env.PORT, () => {
-    console.log(`Server listening at http://localhost:${process.env.PORT}`)
+app.get('/last-write', (req, res) => {
+    res.json({ lastWrite })
 })
 
+app.listen(process.env.PORT, () => {
+    console.log(`Local server listening at http://localhost:${process.env.PORT}`)
+})
+
+const removeQuotes = (str) => str.replace(/^"|"$/g, '')
 
 async function getFirstLine(pathToFile) {
     const readable = fs.createReadStream(pathToFile);
